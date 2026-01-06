@@ -73,17 +73,19 @@ echo "========================================"
 echo "Step 2/3: AI Analysis"
 echo "========================================"
 
-# Check for API key
-if [ -z "$ANTHROPIC_API_KEY" ] && [ -z "$OPENAI_API_KEY" ]; then
-    echo "Warning: No API key found (ANTHROPIC_API_KEY or OPENAI_API_KEY)"
-    echo "Trying local Ollama..."
+# Determine API to use
+API_FLAG=""
+if [ -n "$ANTHROPIC_API_KEY" ]; then
+    API_FLAG="--api anthropic"
+elif [ -n "$OPENAI_API_KEY" ]; then
+    API_FLAG="--api openai"
+elif command -v gemini &> /dev/null; then
+    API_FLAG="--api gemini"
+elif curl -s http://localhost:11434/api/tags &> /dev/null; then
     API_FLAG="--api local"
 else
-    if [ -n "$ANTHROPIC_API_KEY" ]; then
-        API_FLAG="--api anthropic"
-    else
-        API_FLAG="--api openai"
-    fi
+    # Default: generate prompt for manual use
+    API_FLAG="--api prompt"
 fi
 
 python3 "$SCRIPT_DIR/analyze.py" "$TRANSCRIPT_JSON" \
@@ -92,6 +94,31 @@ python3 "$SCRIPT_DIR/analyze.py" "$TRANSCRIPT_JSON" \
     --output-dir "$OUTPUT_DIR"
 
 ANALYSIS_JSON="$OUTPUT_DIR/analysis.json"
+
+# If prompt mode, stop here and give instructions
+if [ "$API_FLAG" = "--api prompt" ]; then
+    echo ""
+    echo "========================================"
+    echo "Manual Analysis Required"
+    echo "========================================"
+    echo ""
+    echo "No API key found. A prompt file has been generated."
+    echo ""
+    echo "Options:"
+    echo "  1. Ask Claude Code to analyze the transcript:"
+    echo "     'Analyze the transcript at $TRANSCRIPT_JSON for a $CONTENT_TYPE video'"
+    echo ""
+    echo "  2. Use gemini-cli (install: npm install -g @anthropic-ai/claude-cli):"
+    echo "     gemini -p $OUTPUT_DIR/${BASENAME}_analysis_prompt.md > $ANALYSIS_JSON"
+    echo ""
+    echo "  3. Copy prompt to Claude.ai/ChatGPT/Gemini and save response to:"
+    echo "     $ANALYSIS_JSON"
+    echo ""
+    echo "After getting analysis.json, run:"
+    echo "  ./tools/analyze.py --from-json $ANALYSIS_JSON"
+    echo "  ./tools/autocut.py $VIDEO_FILE -t $TRANSCRIPT_JSON -a $ANALYSIS_JSON"
+    exit 0
+fi
 
 echo ""
 

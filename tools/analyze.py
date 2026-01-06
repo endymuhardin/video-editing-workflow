@@ -238,6 +238,83 @@ def analyze_with_ollama(prompt: str) -> dict:
     return json.loads(result['response'])
 
 
+def analyze_with_gemini(prompt: str) -> dict:
+    """Call Google Gemini via gemini-cli."""
+    import subprocess
+    import tempfile
+
+    # Write prompt to temp file
+    with tempfile.NamedTemporaryFile(mode='w', suffix='.txt', delete=False) as f:
+        f.write(prompt)
+        prompt_file = f.name
+
+    try:
+        # Call gemini-cli
+        result = subprocess.run(
+            ['gemini', '-p', prompt_file],
+            capture_output=True,
+            text=True,
+            timeout=300
+        )
+
+        if result.returncode != 0:
+            raise RuntimeError(f"gemini-cli failed: {result.stderr}")
+
+        response_text = result.stdout
+
+        # Extract JSON from response
+        try:
+            return json.loads(response_text)
+        except json.JSONDecodeError:
+            import re
+            json_match = re.search(r'```(?:json)?\s*([\s\S]*?)\s*```', response_text)
+            if json_match:
+                return json.loads(json_match.group(1))
+            raise ValueError("Could not parse JSON from gemini response")
+
+    finally:
+        os.unlink(prompt_file)
+
+
+def save_prompt_for_manual_use(prompt: str, output_dir: Path, basename: str):
+    """Save prompt to file for manual use with any AI."""
+    prompt_path = output_dir / f"{basename}_analysis_prompt.md"
+
+    content = f"""# Video Analysis Prompt
+
+Copy this entire prompt and paste into your preferred AI:
+- Claude Code (via this CLI)
+- Claude.ai
+- ChatGPT
+- Gemini
+- Any other LLM
+
+---
+
+{prompt}
+
+---
+
+## After getting the response:
+
+1. Copy the JSON response
+2. Save it to: `{output_dir}/analysis.json`
+3. Run: `./tools/generate-outputs.py {output_dir}/analysis.json`
+
+Or paste the JSON response back to Claude Code and ask to generate the output files.
+"""
+
+    with open(prompt_path, 'w') as f:
+        f.write(content)
+
+    print(f"\nPrompt saved to: {prompt_path}")
+    print("\nYou can now:")
+    print("  1. Open the prompt file and copy to any AI")
+    print("  2. Or ask Claude Code: 'analyze the transcript at <path>'")
+
+    return prompt_path
+
+
 def generate_outputs(analysis: dict, output_dir: Path, basename: str):
     """Generate output files from analysis."""
 
@@ -328,14 +405,34 @@ def generate_outputs(analysis: dict, output_dir: Path, basename: str):
 def main():
     parser = argparse.ArgumentParser(description="AI analysis of video transcript")
     parser.add_argument("transcript", help="Path to Whisper JSON transcript")
-    parser.add_argument("--api", choices=["anthropic", "openai", "local"],
-                        default="anthropic", help="API to use for analysis")
+    parser.add_argument("--api", choices=["anthropic", "openai", "gemini", "local", "prompt"],
+                        default="prompt", help="API to use (default: prompt for manual use)")
     parser.add_argument("--content-type", default="coding-tutorial",
                         choices=["coding-tutorial", "vlog", "podcast", "shorts"],
                         help="Content type for context")
     parser.add_argument("--output-dir", help="Output directory (default: same as transcript)")
+    parser.add_argument("--from-json", help="Generate outputs from existing analysis.json")
 
     args = parser.parse_args()
+
+    # If generating from existing JSON
+    if args.from_json:
+        json_path = Path(args.from_json)
+        if not json_path.exists():
+            print(f"Error: JSON file not found: {json_path}")
+            sys.exit(1)
+
+        output_dir = Path(args.output_dir) if args.output_dir else json_path.parent
+        basename = json_path.stem.replace('_analysis', '').replace('analysis', 'video')
+
+        print(f"Loading analysis from: {json_path}")
+        with open(json_path, 'r') as f:
+            analysis = json.load(f)
+
+        print("Generating output files...")
+        generate_outputs(analysis, output_dir, basename)
+        print("\nOutput files generated!")
+        return
 
     transcript_path = Path(args.transcript)
 
@@ -357,13 +454,20 @@ def main():
 
     prompt = build_analysis_prompt(segments, args.content_type)
 
+    # Prompt-only mode (default) - save prompt for manual use
+    if args.api == "prompt":
+        save_prompt_for_manual_use(prompt, output_dir, basename)
+        return
+
     print(f"Analyzing with {args.api}...")
 
     if args.api == "anthropic":
         analysis = analyze_with_anthropic(prompt)
     elif args.api == "openai":
         analysis = analyze_with_openai(prompt)
-    else:
+    elif args.api == "gemini":
+        analysis = analyze_with_gemini(prompt)
+    else:  # local/ollama
         analysis = analyze_with_ollama(prompt)
 
     print("Generating output files...")
