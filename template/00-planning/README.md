@@ -10,8 +10,11 @@ This folder contains all planning and scripting materials before recording begin
 ├── outline/     # Topic structure, episode breakdown
 ├── research/    # Reference docs, links, notes
 ├── demo-code/   # Working code to demonstrate
-└── shotlist/    # Footage requirements per section
+├── shotlist/    # Footage requirements per section
+└── prompts/     # Reusable AI prompt templates
 ```
+
+See `AI-WORKFLOW.md` for AI-assisted planning, editing, and publishing prompts.
 
 ## Workflow
 

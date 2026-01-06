@@ -37,7 +37,7 @@ pip install auto-editor
 ### Directory Structure
 ```
 template/
-├── 00-planning/     # Pre-production (script/, outline/, shotlist/, demo-code/)
+├── 00-planning/     # Pre-production (script/, outline/, shotlist/, demo-code/, prompts/)
 ├── 01-raw/          # Immutable source (camera/, screen/, audio/)
 ├── 02-proxy/        # Temp cache/proxies (gitignored)
 ├── 03-project/      # DaVinci .drp + auto-editor output
@@ -56,10 +56,14 @@ template/
 
 ### Processing Pipeline
 ```
-Planning → OBS Recording → auto-editor (silence removal) → DaVinci Resolve → Export
-              ↓                     ↓
-         00-planning/        03-project/auto-editor/*.xml
+Planning → OBS Recording → auto-editor (silence removal) → DaVinci Resolve → Export → Publish
+    │                                                            │                │
+    ▼                                                            ▼                ▼
+00-planning/                                              06-captions/      Metadata
+(AI: script, outline)                                    (AI: auto-subtitle) (AI: title, desc, tags)
 ```
+
+See `AI-WORKFLOW.md` for AI-assisted prompts throughout the pipeline.
 
 ### Hardware Setup
 ```
@@ -73,11 +77,24 @@ Hollyland Lark M2 (USB-C receiver, needs 15cm extension cable)
 Example: 2026-01-06_SPRING01_CAM_001.mov
 ```
 
+## Content Types
+
+Bumpers organized by content type in `04-assets/bumpers/`:
+
+| Type | Intro | Outro | Style |
+|------|-------|-------|-------|
+| coding-tutorial | 3-4 sec | 5-20 sec | Dark, professional |
+| vlog | 2-3 sec | 5-10 sec | Warm, casual |
+| podcast | 5-8 sec | 10-15 sec | Branded, audio-centric |
+| shorts/* | 1-2 sec | 2-3 sec | Vertical 9:16, high contrast |
+
+Shorts subfolders: `youtube/`, `instagram/`, `facebook/`
+
 ## Export Targets
 - **Master:** 1920x1080, H.265, 25Mbps
 - **YouTube Shorts:** 1080x1920, H.264, 15Mbps
 - **Instagram Reels:** 1080x1920, H.264, 12Mbps
-- **TikTok:** 1080x1920, H.264, 10Mbps
+- **TikTok/Facebook:** 1080x1920, H.264, 10Mbps
 
 ## Git Tracking
 Tracked: scripts, templates, documentation, Fusion settings
