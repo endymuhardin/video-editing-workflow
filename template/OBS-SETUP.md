@@ -38,15 +38,20 @@ Settings:
 #### Hollyland Lark M2 Setup
 
 ```
-1. Connect Lark M2 receiver via USB-C to MacBook
+Hardware connection:
+  Lark M2 RX → USB-C extension (15cm) → MacBook
 
-2. System Preferences > Sound > Input
-   Select: "Hollyland Lark M2"
+  Note: Lark M2 receiver is long and blocks adjacent port.
+        Use short USB-C extension cable to avoid this.
 
-3. Lark M2 Receiver Settings:
-   Gain:           Medium (adjust to avoid clipping)
-   Noise Reduction: On (if needed)
-   Low-Cut Filter:  On (reduces rumble)
+macOS setup:
+  System Preferences > Sound > Input
+  Select: "Hollyland Lark M2"
+
+Lark M2 Receiver Settings:
+  Gain:           Medium (adjust to avoid clipping)
+  Noise Reduction: On (if needed)
+  Low-Cut Filter:  On (reduces rumble)
 ```
 
 #### OBS Audio Configuration

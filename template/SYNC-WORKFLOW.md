@@ -26,13 +26,15 @@ Connect Lark M2 to **laptop** (not camera):
 
 ```
 Lark M2 TX (transmitter) → Clip to shirt
-Lark M2 RX (receiver)    → USB-C → MacBook
-                                      ↓
-                          Screen recording captures primary audio
+Lark M2 RX (receiver)    → USB-C extension (15cm) → MacBook
+                                                        ↓
+                                        Screen recording captures primary audio
 
 Camera built-in mic      → Captures room audio for sync reference
                             (muted in final edit)
 ```
+
+**USB-C extension cable:** The Lark M2 receiver is long and blocks the adjacent USB-C port on MacBook. Use a short 15cm USB-C extension cable.
 
 **Why laptop, not camera:**
 - USB-C = clean digital signal (no analog noise)
