@@ -404,7 +404,7 @@ def generate_outputs(analysis: dict, output_dir: Path, basename: str):
 
 def main():
     parser = argparse.ArgumentParser(description="AI analysis of video transcript")
-    parser.add_argument("transcript", help="Path to Whisper JSON transcript")
+    parser.add_argument("transcript", nargs='?', help="Path to Whisper JSON transcript")
     parser.add_argument("--api", choices=["anthropic", "openai", "gemini", "local", "prompt"],
                         default="prompt", help="API to use (default: prompt for manual use)")
     parser.add_argument("--content-type", default="coding-tutorial",
@@ -433,6 +433,11 @@ def main():
         generate_outputs(analysis, output_dir, basename)
         print("\nOutput files generated!")
         return
+
+    # Transcript is required if not using --from-json
+    if not args.transcript:
+        print("Error: transcript argument is required (or use --from-json)")
+        sys.exit(1)
 
     transcript_path = Path(args.transcript)
 
