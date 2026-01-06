@@ -2,23 +2,103 @@
 
 Guide for using AI tools throughout the video production pipeline.
 
-## Overview
+## Quick Start: Automated Pipeline
+
+After recording, run the full AI processing pipeline:
+
+```bash
+./tools/process.sh 01-raw/camera/video.mov coding-tutorial
+```
+
+This automatically:
+1. **Transcribes** video using Whisper (local)
+2. **Analyzes** transcript for visual recommendations
+3. **Generates** EDL/XML with auto-cuts
+
+Output in `03-project/ai-analysis/`:
+```
+├── video.json              # Word-level transcript
+├── video.srt               # Subtitles (copy to 06-captions/)
+├── analysis.json           # Full AI analysis
+├── visual-recommendations.md   # Graphics/b-roll needed
+├── lower-thirds.csv        # Lower third timings
+├── chapters.md             # YouTube chapters
+├── cuts.md                 # Filler words, repetitions to cut
+├── seo.md                  # Title/tags suggestions
+├── video.edl               # Import to DaVinci
+└── video.fcpxml            # Alternative format
+```
+
+See `tools/README.md` for detailed usage.
+
+---
+
+## Pipeline Overview
 
 ```
-Planning          Production        Editing           Publishing
-   │                  │                │                  │
-   ▼                  ▼                ▼                  ▼
-┌─────────┐     ┌─────────┐     ┌─────────┐     ┌─────────┐
-│ Claude  │     │ AI Image│     │ DaVinci │     │ Claude  │
-│ ChatGPT │     │ Gen     │     │ AI      │     │ ChatGPT │
-└─────────┘     └─────────┘     └─────────┘     └─────────┘
-     │               │               │               │
-     ▼               ▼               ▼               ▼
-  Script          Graphics       Captions         Metadata
-  Outline         B-Roll         Voice ISO        Descriptions
-  Research        Thumbnails     Scene Cut        Social Posts
-  Shotlist                       Magic Mask       SEO Tags
+                           AUTOMATED (tools/)
+                    ┌─────────────────────────────┐
+                    │                             │
+Planning     Recording     Transcribe    Analyze     Edit        Publish
+   │            │              │            │          │            │
+   ▼            ▼              ▼            ▼          ▼            ▼
+┌──────┐    ┌──────┐      ┌────────┐   ┌────────┐  ┌──────┐    ┌──────┐
+│Script│    │Nikon │      │Whisper │   │Claude/ │  │DaVinci│   │Claude│
+│Outline│──▶│ZFC   │─────▶│Local   │──▶│GPT API │─▶│Resolve│──▶│GPT   │
+│Shotlist   │+Lark │      │        │   │        │  │       │   │      │
+└──────┘    └──────┘      └────────┘   └────────┘  └──────┘    └──────┘
+                               │            │          │            │
+                               ▼            ▼          ▼            ▼
+                          transcript   visual recs  final cut   metadata
+                          .json/.srt   cuts.md      + effects   title/desc
+                                       chapters.md              social
+                                       lower-thirds
 ```
+
+---
+
+## Workflow Steps
+
+### Step 1: Plan (Manual or AI-assisted)
+- Write script/outline in `00-planning/`
+- Use prompts below for AI assistance
+
+### Step 2: Record
+- Nikon ZFC + Lark M2
+- Output to `01-raw/camera/`
+
+### Step 3: Process (Automated)
+```bash
+./tools/process.sh 01-raw/camera/video.mov coding-tutorial
+```
+
+### Step 4: Review Recommendations
+```bash
+cat 03-project/ai-analysis/visual-recommendations.md
+```
+
+Prepare required assets:
+- Create infographics (Figma/Canva)
+- Record screen captures
+- Find/record b-roll
+
+### Step 5: Edit in DaVinci
+1. Import `video.edl` or `video.fcpxml`
+2. Link media
+3. Review auto-cuts
+4. Add visuals at recommended timestamps
+5. Add lower thirds from `lower-thirds.csv`
+6. Add bumpers from `04-assets/bumpers/[content-type]/`
+
+### Step 6: Export
+- Copy `video.srt` to `06-captions/`
+- Render final video to `05-exports/`
+- Create thumbnail using `seo.md` suggestions
+
+### Step 7: Publish
+- Copy chapters from `chapters.md` to YouTube
+- Use SEO suggestions from `seo.md`
+- Generate social posts with prompts below
 
 ---
 

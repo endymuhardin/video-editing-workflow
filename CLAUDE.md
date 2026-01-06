@@ -22,22 +22,41 @@ Video editing workflow system for programming tutorial videos on MacBook Pro M1.
 ./new-project.sh TIP01 shorts "Quick Git Tip"
 ```
 
-### Auto-Editor (Silence Removal)
+### AI Processing Pipeline (Recommended)
 ```bash
 cd projects/YYYY-MM-DD_PROJECT_CODE
 
-./auto-edit.sh                              # Default: export DaVinci XML
+# Full pipeline: transcribe → analyze → autocut
+./tools/process.sh 01-raw/camera/video.mov coding-tutorial
+
+# Individual steps:
+./tools/transcribe.sh 01-raw/camera/video.mov           # Whisper transcription
+./tools/analyze.py 03-project/ai-analysis/video.json    # AI visual recommendations
+./tools/autocut.py 01-raw/camera/video.mov \            # Generate EDL/XML
+    --transcript 03-project/ai-analysis/video.json \
+    --analysis 03-project/ai-analysis/analysis.json
+```
+
+Output in `03-project/ai-analysis/`:
+- `video.srt` - Subtitles
+- `visual-recommendations.md` - Graphics/b-roll needed
+- `lower-thirds.csv` - Lower third timings
+- `chapters.md` - YouTube chapters
+- `cuts.md` - Filler words, repetitions
+- `seo.md` - Title/tags suggestions
+- `video.edl` / `video.fcpxml` - Import to DaVinci
+
+### Legacy Auto-Editor (Silence Only)
+```bash
+./auto-edit.sh                              # Silence removal → DaVinci XML
 ./auto-edit.sh --preview                    # Preview cuts only
-./auto-edit.sh --margin 0.08sec --threshold 5%  # Aggressive removal
-./auto-edit.sh --export video               # MP4 re-encode
-./auto-edit.sh --export premiere            # Premiere Pro XML
-./auto-edit.sh --export fcpxml              # Final Cut Pro XML
 ```
 
 ### Python Environment
 ```bash
 source venv/bin/activate
-pip install auto-editor
+pip install openai-whisper anthropic       # For AI pipeline
+pip install auto-editor                     # For legacy auto-edit
 ```
 
 ## Architecture
@@ -48,11 +67,18 @@ template/
 ├── 00-planning/     # Pre-production (script/, outline/, shotlist/, demo-code/, prompts/)
 ├── 01-raw/          # Immutable source (camera/, screen/, audio/)
 ├── 02-proxy/        # Temp cache/proxies (gitignored)
-├── 03-project/      # DaVinci .drp + auto-editor output
+├── 03-project/      # DaVinci .drp + ai-analysis/ output
+│   └── ai-analysis/ # Transcripts, recommendations, EDL/XML
 ├── 04-assets/       # Fusion templates (bumpers/, lower-thirds/, thumbnails/)
 ├── 05-exports/      # Final renders (master/, shorts/)
 ├── 06-captions/     # SRT/VTT subtitles
 └── 07-archive/      # Completed archives (gitignored)
+
+tools/               # AI processing scripts (repo root)
+├── process.sh       # Full pipeline
+├── transcribe.sh    # Whisper transcription
+├── analyze.py       # AI visual recommendations
+└── autocut.py       # Transcript-aware cutting
 ```
 
 ### Footage Types (for shotlist planning)
@@ -64,14 +90,18 @@ template/
 
 ### Processing Pipeline
 ```
-Planning → OBS Recording → auto-editor (silence removal) → DaVinci Resolve → Export → Publish
-    │                                                            │                │
-    ▼                                                            ▼                ▼
-00-planning/                                              06-captions/      Metadata
-(AI: script, outline)                                    (AI: auto-subtitle) (AI: title, desc, tags)
+Plan → Record → Transcribe → AI Analyze → Auto-cut → DaVinci Edit → Export → Publish
+  │       │          │            │           │            │           │         │
+  ▼       ▼          ▼            ▼           ▼            ▼           ▼         ▼
+script  video    transcript   visual recs   EDL/XML    + effects    render   metadata
+outline          + .srt       cuts.md                  + bumpers             title/desc
+shotlist                      chapters.md              + lower 3rds          chapters
+                              lower-thirds.csv                               social
 ```
 
-See `AI-WORKFLOW.md` for AI-assisted prompts throughout the pipeline.
+**Automated steps** (via `./tools/process.sh`): Transcribe → AI Analyze → Auto-cut
+
+See `AI-WORKFLOW.md` for detailed workflow and prompts.
 
 ### Hardware Setup
 ```
