@@ -1,8 +1,45 @@
-# Lower Third Fusion Templates
+# Lower Third Templates
+
+Organized by content type with ArtiVisi brand palette.
+
+## Structure
+
+```
+lower-thirds/
+├── coding-tutorial/        # Programming tutorials
+│   ├── LowerThird_Simple.setting
+│   └── LowerThird_Minimal.setting
+├── vlog/                   # Personal vlogs
+├── podcast/                # Video podcasts
+└── shorts/                 # Vertical short-form
+```
+
+## ArtiVisi Brand Palette
+
+```
+Primary (Deep Blue):    #2e3192
+Secondary (Green):      #58c034
+Text (Dark):            #1a1a2e
+Text (Light):           #ffffff
+Text (Muted):           #6b7280
+Background:             #f8f9fc
+```
+
+**Fonts:** Inter (primary), Fira Code (monospace)
+
+## Content Type Summary
+
+| Type | Duration | Position | Style |
+|------|----------|----------|-------|
+| Coding Tutorial | 3-5 sec | Bottom left | Professional, clean |
+| Vlog | 2-4 sec | Bottom left/center | Friendly, warm |
+| Podcast | 5-8 sec | Bottom, speaker-aligned | Broadcast quality |
+| Shorts | 2-3 sec | Middle-lower (NOT bottom) | Bold, mobile-readable |
 
 ## Available Templates
 
-### 1. LowerThird_Simple.setting
+### coding-tutorial/LowerThird_Simple.setting
+
 Solid color bar with rounded corners, slide-in animation.
 
 ```
@@ -15,15 +52,11 @@ Solid color bar with rounded corners, slide-in animation.
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-**Editable Controls:**
-- Name (text)
-- Title (text)
-- Bar Color (RGB)
-- Animation Offset
+**Controls:** Name, Title, Bar Color, Animation Offset
+**Animation:** Slides in from left (0-15f), holds, slides out (135-150f)
 
-**Animation:** Slides in from left (frames 0-15), holds, slides out (frames 135-150)
+### coding-tutorial/LowerThird_Minimal.setting
 
-### 2. LowerThird_Minimal.setting
 Clean design with accent bar, staggered fade-in animation.
 
 ```
@@ -35,137 +68,59 @@ Clean design with accent bar, staggered fade-in animation.
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-**Editable Controls:**
-- Name (text)
-- Title (text)
-- Accent Color (RGB)
-
-**Animation:**
-- Accent bar fades in (frames 0-10)
-- Name fades in + slides (frames 5-18)
-- Title fades in + slides (frames 10-23)
-- Reverse out (frames 127-150)
+**Controls:** Name, Title, Accent Color
+**Animation:** Staggered fade-in (0-23f), reverse out (127-150f)
 
 ---
 
 ## Installation
 
-### Method 1: Drag and Drop (Per Project)
-1. Open DaVinci Resolve
-2. Go to Fusion page
-3. Drag `.setting` file into the Fusion node graph
-4. Connect MediaIn to your clip, MediaOut to output
+### Method 1: Drag and Drop
+1. Open DaVinci Resolve > Fusion page
+2. Drag `.setting` file into node graph
+3. Connect to MediaOut
 
-### Method 2: Install to Fusion Templates (Global)
-1. Copy `.setting` files to:
-   - **Mac:** `~/Library/Application Support/Blackmagic Design/DaVinci Resolve/Fusion/Templates/Edit/Titles/`
-   - **Windows:** `%APPDATA%\Blackmagic Design\DaVinci Resolve\Fusion\Templates\Edit\Titles\`
-2. Restart DaVinci Resolve
-3. Access from: Effects > Toolbox > Titles
+### Method 2: Install to Fusion Templates
+```bash
+# Mac
+cp coding-tutorial/*.setting ~/Library/Application\ Support/Blackmagic\ Design/DaVinci\ Resolve/Fusion/Templates/Edit/Titles/
+```
 
 ### Method 3: Power Bins (Recommended)
-1. Edit page > Media Pool
-2. Right-click > Show Power Bins
-3. Create bin: "Lower Thirds"
-4. Drag template clips into Power Bin
-5. Available across all projects
-
----
-
-## Usage
-
-### In Edit Page (Timeline)
-1. Add template as Fusion Clip above your video
-2. Right-click > Open in Fusion Page
-3. Select the Group node (LowerThird or LowerThirdMinimal)
-4. In Inspector panel, edit:
-   - Name
-   - Title
-   - Colors
-
-### Adjusting Duration
-Default duration: 150 frames (5 seconds at 30fps)
-
-To change:
-1. In Fusion, select all keyframed nodes
-2. Open Spline Editor (Shift+Space > Spline)
-3. Select all keyframes
-4. Scale to desired duration
-
-### Changing Position
-1. Select the Rectangle/Mask node
-2. Adjust Center X/Y values
-3. Or use Transform node for global position
+1. Create lower third Fusion clip
+2. Customize with defaults
+3. Drag to Power Bins > "Lower Thirds"
+4. Reuse across projects
 
 ---
 
 ## Customization
 
-### Change Font
-1. Select NameText or TitleText node
-2. Inspector > Font dropdown
-3. Select your font
+### Text
+1. Select Group node
+2. Inspector > Controls
+3. Edit Name, Title
 
-Recommended fonts:
-- **Mac:** SF Pro Display, Helvetica Neue
-- **Cross-platform:** Roboto, Inter, Open Sans
-- **Monospace (code):** JetBrains Mono, Fira Code
+### Colors
+Use ArtiVisi palette values:
+- Bar/Accent Color: `#2e3192` or `#58c034`
+- Convert hex to 0-1 range for Fusion
 
-### Change Colors
-In the Group controls:
-- Bar Color / Accent Color: Main brand color
-- Text colors: Edit in individual Text+ nodes
+### Duration
+Default: 150 frames (5 sec @ 30fps)
+1. Spline Editor > select all keyframes
+2. Scale to desired duration
 
-### Add Drop Shadow
+### Font
 1. Select Text+ node
-2. Inspector > Shading > Element 2
-3. Enable, set as Shadow
-4. Adjust offset, softness, opacity
-
-### Add Background Blur (frosted glass effect)
-1. Add Background node before rectangle mask
-2. Set to transparent
-3. Add Blur after Merge
-4. Mask blur to rectangle area
+2. Inspector > Font
+3. Recommended: Inter, SF Pro Display, Fira Code (mono)
 
 ---
 
-## Creating Your Own
+## Matching OBS Overlay
 
-### Basic Structure
-```
-MediaIn → Background → Text+ → Merge → Transform (animate) → Merge → Output
-              ↓
-           Mask (shape)
-```
+These templates use the same ArtiVisi palette as:
+`/Users/endymuhardin/workspace/video-editing/live-stream-overlay`
 
-### Save as Reusable Macro
-1. Select all nodes in your lower third
-2. Right-click > Macro > Create Macro
-3. Expose desired controls (name, title, colors)
-4. Save as `.setting` file
-
-### Animation Tips
-- Use BezierSpline for smooth easing
-- Stagger animations 5-10 frames for polish
-- Keep total animation under 1 second in/out
-- Match timing to your video's pacing
-
----
-
-## Troubleshooting
-
-### Text Not Showing
-- Check Text+ node is connected
-- Verify font is installed
-- Check opacity/blend values
-
-### Animation Not Playing
-- Ensure keyframes exist on Spline
-- Check timeline range matches keyframe range
-- Verify Animation Offset is 0
-
-### Colors Look Wrong
-- Check project color management
-- Ensure values are 0-1 range (not 0-255)
-- Verify alpha channel settings
+Ensures visual consistency between live streams and edited videos.

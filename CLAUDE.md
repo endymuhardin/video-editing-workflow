@@ -79,16 +79,27 @@ Example: 2026-01-06_SPRING01_CAM_001.mov
 
 ## Content Types
 
-Bumpers organized by content type in `04-assets/bumpers/`:
+Bumpers and lower-thirds organized by content type in `04-assets/`:
 
-| Type | Intro | Outro | Style |
-|------|-------|-------|-------|
-| coding-tutorial | 3-4 sec | 5-20 sec | Dark, professional |
-| vlog | 2-3 sec | 5-10 sec | Warm, casual |
-| podcast | 5-8 sec | 10-15 sec | Branded, audio-centric |
-| shorts/* | 1-2 sec | 2-3 sec | Vertical 9:16, high contrast |
+| Type | Bumper Intro | Lower Third | Style |
+|------|--------------|-------------|-------|
+| coding-tutorial | 3-4 sec | 3-5 sec | Dark, professional |
+| vlog | 2-3 sec | 2-4 sec | Warm, casual |
+| podcast | 5-8 sec | 5-8 sec | Branded, broadcast |
+| shorts/* | 1-2 sec | 2-3 sec | Vertical 9:16, bold |
 
 Shorts subfolders: `youtube/`, `instagram/`, `facebook/`
+
+## ArtiVisi Brand Palette
+
+```
+Primary:    #2e3192 (Deep Blue)
+Secondary:  #58c034 (Green)
+Text:       #1a1a2e (Dark)
+Fonts:      Inter, Fira Code (mono)
+```
+
+Matches OBS overlay: `/Users/endymuhardin/workspace/video-editing/live-stream-overlay`
 
 ## Export Targets
 - **Master:** 1920x1080, H.265, 25Mbps
