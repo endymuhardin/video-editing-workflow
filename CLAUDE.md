@@ -41,7 +41,7 @@ template/
 ├── 01-raw/          # Immutable source (camera/, screen/, audio/)
 ├── 02-proxy/        # Temp cache/proxies (gitignored)
 ├── 03-project/      # DaVinci .drp + auto-editor output
-├── 04-assets/       # Fusion templates (bumpers/, lower-thirds/)
+├── 04-assets/       # Fusion templates (bumpers/, lower-thirds/, thumbnails/)
 ├── 05-exports/      # Final renders (master/, shorts/)
 ├── 06-captions/     # SRT/VTT subtitles
 └── 07-archive/      # Completed archives (gitignored)
@@ -79,14 +79,14 @@ Example: 2026-01-06_SPRING01_CAM_001.mov
 
 ## Content Types
 
-Bumpers and lower-thirds organized by content type in `04-assets/`:
+Assets organized by content type in `04-assets/bumpers/`, `lower-thirds/`, `thumbnails/`:
 
-| Type | Bumper Intro | Lower Third | Style |
-|------|--------------|-------------|-------|
-| coding-tutorial | 3-4 sec | 3-5 sec | Dark, professional |
-| vlog | 2-3 sec | 2-4 sec | Warm, casual |
-| podcast | 5-8 sec | 5-8 sec | Branded, broadcast |
-| shorts/* | 1-2 sec | 2-3 sec | Vertical 9:16, bold |
+| Type | Bumper | Lower Third | Thumbnail | Style |
+|------|--------|-------------|-----------|-------|
+| coding-tutorial | 3-4 sec | 3-5 sec | Code/logo focus | Dark, professional |
+| vlog | 2-3 sec | 2-4 sec | Expressive face | Warm, casual |
+| podcast | 5-8 sec | 5-8 sec | Host + guest | Branded, broadcast |
+| shorts/* | 1-2 sec | 2-3 sec | Action frame | Vertical 9:16, bold |
 
 Shorts subfolders: `youtube/`, `instagram/`, `facebook/`
 
