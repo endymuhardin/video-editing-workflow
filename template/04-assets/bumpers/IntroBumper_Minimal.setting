@@ -1,0 +1,235 @@
+{
+	Tools = ordered() {
+		IntroBumperMinimal = GroupOperator {
+			CtrlWZoom = false,
+			NameSet = true,
+			CustomData = {
+				HelpPage = "https://youtube.com/artivisi",
+			},
+			Inputs = ordered() {
+				Input1 = InstanceInput {
+					SourceOp = "ChannelText",
+					Source = "StyledText",
+					Name = "Channel Name",
+					ControlGroup = 1,
+					Default = "ArtiVisi",
+				},
+				Input2 = InstanceInput {
+					SourceOp = "URLText",
+					Source = "StyledText",
+					Name = "URL/Tagline",
+					ControlGroup = 2,
+					Default = "youtube.com/artivisi",
+				},
+				Input3 = InstanceInput {
+					SourceOp = "BG",
+					Source = "TopLeftRed",
+					Name = "Background",
+					ControlGroup = 3,
+					Default = 1,
+				},
+				Input4 = InstanceInput {
+					SourceOp = "BG",
+					Source = "TopLeftGreen",
+					ControlGroup = 3,
+					Default = 1,
+				},
+				Input5 = InstanceInput {
+					SourceOp = "BG",
+					Source = "TopLeftBlue",
+					ControlGroup = 3,
+					Default = 1,
+				},
+				Input6 = InstanceInput {
+					SourceOp = "ChannelText",
+					Source = "Red1",
+					Name = "Text Color",
+					ControlGroup = 4,
+					Default = 0.1,
+				},
+				Input7 = InstanceInput {
+					SourceOp = "ChannelText",
+					Source = "Green1",
+					ControlGroup = 4,
+					Default = 0.1,
+				},
+				Input8 = InstanceInput {
+					SourceOp = "ChannelText",
+					Source = "Blue1",
+					ControlGroup = 4,
+					Default = 0.1,
+				},
+			},
+			Outputs = {
+				MainOutput1 = InstanceOutput {
+					SourceOp = "MergeFinal",
+					Source = "Output",
+				}
+			},
+			ViewInfo = GroupInfo {
+				Pos = { 660, 280 },
+				Flags = {
+					AllowPan = false,
+					GridSnap = true,
+					AutoSnap = true,
+				},
+				Size = { 400, 250 },
+				Direction = "Horizontal",
+				PipeStyle = "Direct",
+				Scale = 1,
+				Offset = { 0, 0 },
+			},
+			Tools = ordered() {
+				BG = Background {
+					CtrlWShown = false,
+					Inputs = {
+						GlobalOut = Input { Value = 90, },
+						Width = Input { Value = 1920, },
+						Height = Input { Value = 1080, },
+						UseFrameFormatSettings = Input { Value = 1, },
+						["Gamut.SLogVersion"] = Input { Value = FuID { "SLog2" }, },
+						TopLeftRed = Input { Value = 1, },
+						TopLeftGreen = Input { Value = 1, },
+						TopLeftBlue = Input { Value = 1, },
+					},
+					ViewInfo = OperatorInfo { Pos = { 0, 0 } },
+				},
+				ChannelText = TextPlus {
+					CtrlWShown = false,
+					Inputs = {
+						GlobalOut = Input { Value = 90, },
+						Width = Input { Value = 1920, },
+						Height = Input { Value = 1080, },
+						UseFrameFormatSettings = Input { Value = 1, },
+						["Gamut.SLogVersion"] = Input { Value = FuID { "SLog2" }, },
+						Center = Input {
+							Value = { 0.5, 0.52 },
+							Expression = "Point(0.5, 0.52 + (1-PosAnim)*0.02)",
+						},
+						Opacity = Input {
+							SourceOp = "OpacityAnim",
+							Source = "Value",
+						},
+						LayoutRotation = Input { Value = 1, },
+						TransformRotation = Input { Value = 1, },
+						Softness1 = Input { Value = 1, },
+						StyledText = Input { Value = "ArtiVisi", },
+						Font = Input { Value = "SF Pro Display", },
+						Style = Input { Value = "Semibold", },
+						Size = Input { Value = 0.09, },
+						VerticalJustificationNew = Input { Value = 3, },
+						HorizontalJustificationNew = Input { Value = 3, },
+						Red1 = Input { Value = 0.1, },
+						Green1 = Input { Value = 0.1, },
+						Blue1 = Input { Value = 0.1, },
+						Tracking = Input { Value = 0.02, },
+					},
+					ViewInfo = OperatorInfo { Pos = { 110, 0 } },
+				},
+				OpacityAnim = BezierSpline {
+					SplineColor = { Red = 255, Green = 0, Blue = 255 },
+					CtrlWZoom = false,
+					KeyFrames = {
+						[0] = { 0, RH = { 8, 0.4 }, Flags = { Linear = false } },
+						[20] = { 1, LH = { 12, 0.6 }, Flags = { Linear = false } },
+						[70] = { 1, RH = { 78, 0.6 }, Flags = { Linear = false } },
+						[90] = { 0, LH = { 82, 0.4 }, Flags = { Linear = false } },
+					},
+				},
+				PosAnim = BezierSpline {
+					SplineColor = { Red = 0, Green = 255, Blue = 0 },
+					CtrlWZoom = false,
+					KeyFrames = {
+						[0] = { 0, RH = { 8, 0.4 }, Flags = { Linear = false } },
+						[20] = { 1, LH = { 12, 0.6 }, Flags = { Linear = false } },
+						[70] = { 1, RH = { 78, 0.6 }, Flags = { Linear = false } },
+						[90] = { 0, LH = { 82, 0.4 }, Flags = { Linear = false } },
+					},
+				},
+				MergeChannel = Merge {
+					CtrlWShown = false,
+					Inputs = {
+						Background = Input {
+							SourceOp = "BG",
+							Source = "Output",
+						},
+						Foreground = Input {
+							SourceOp = "ChannelText",
+							Source = "Output",
+						},
+						PerformDepthMerge = Input { Value = 0, },
+					},
+					ViewInfo = OperatorInfo { Pos = { 110, 66 } },
+				},
+				URLText = TextPlus {
+					CtrlWShown = false,
+					Inputs = {
+						GlobalOut = Input { Value = 90, },
+						Width = Input { Value = 1920, },
+						Height = Input { Value = 1080, },
+						UseFrameFormatSettings = Input { Value = 1, },
+						["Gamut.SLogVersion"] = Input { Value = FuID { "SLog2" }, },
+						Center = Input {
+							Value = { 0.5, 0.45 },
+							Expression = "Point(0.5, 0.45 + (1-URLPosAnim)*0.02)",
+						},
+						Opacity = Input {
+							SourceOp = "URLOpacityAnim",
+							Source = "Value",
+						},
+						LayoutRotation = Input { Value = 1, },
+						TransformRotation = Input { Value = 1, },
+						Softness1 = Input { Value = 1, },
+						StyledText = Input { Value = "youtube.com/artivisi", },
+						Font = Input { Value = "SF Pro Display", },
+						Style = Input { Value = "Light", },
+						Size = Input { Value = 0.025, },
+						VerticalJustificationNew = Input { Value = 3, },
+						HorizontalJustificationNew = Input { Value = 3, },
+						Red1 = Input { Value = 0.4, },
+						Green1 = Input { Value = 0.4, },
+						Blue1 = Input { Value = 0.4, },
+						Tracking = Input { Value = 0.1, },
+					},
+					ViewInfo = OperatorInfo { Pos = { 220, 0 } },
+				},
+				URLOpacityAnim = BezierSpline {
+					SplineColor = { Red = 0, Green = 255, Blue = 255 },
+					CtrlWZoom = false,
+					KeyFrames = {
+						[8] = { 0, RH = { 16, 0.4 }, Flags = { Linear = false } },
+						[28] = { 1, LH = { 20, 0.6 }, Flags = { Linear = false } },
+						[62] = { 1, RH = { 70, 0.6 }, Flags = { Linear = false } },
+						[82] = { 0, LH = { 74, 0.4 }, Flags = { Linear = false } },
+					},
+				},
+				URLPosAnim = BezierSpline {
+					SplineColor = { Red = 255, Green = 255, Blue = 0 },
+					CtrlWZoom = false,
+					KeyFrames = {
+						[8] = { 0, RH = { 16, 0.4 }, Flags = { Linear = false } },
+						[28] = { 1, LH = { 20, 0.6 }, Flags = { Linear = false } },
+						[62] = { 1, RH = { 70, 0.6 }, Flags = { Linear = false } },
+						[82] = { 0, LH = { 74, 0.4 }, Flags = { Linear = false } },
+					},
+				},
+				MergeFinal = Merge {
+					CtrlWShown = false,
+					Inputs = {
+						Background = Input {
+							SourceOp = "MergeChannel",
+							Source = "Output",
+						},
+						Foreground = Input {
+							SourceOp = "URLText",
+							Source = "Output",
+						},
+						PerformDepthMerge = Input { Value = 0, },
+					},
+					ViewInfo = OperatorInfo { Pos = { 220, 66 } },
+				},
+			},
+		},
+	},
+	ActiveTool = "IntroBumperMinimal",
+}
