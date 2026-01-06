@@ -20,23 +20,47 @@ Nikon ZFC (SD Card)              MacBook (QuickTime/OBS)
 
 ## Recording Setup
 
+### Audio: Hollyland Lark M2
+
+Connect Lark M2 to **laptop** (not camera):
+
+```
+Lark M2 TX (transmitter) → Clip to shirt
+Lark M2 RX (receiver)    → USB-C → MacBook
+                                      ↓
+                          Screen recording captures primary audio
+
+Camera built-in mic      → Captures room audio for sync reference
+                            (muted in final edit)
+```
+
+**Why laptop, not camera:**
+- USB-C = clean digital signal (no analog noise)
+- MacBook audio input > Nikon 3.5mm preamp
+- Primary audio on the track you'll actually use
+- Camera audio only needed for waveform sync
+
 ### Camera (Nikon ZFC)
 
 ```
 Recording settings:
   Resolution:     1920x1080
   Frame rate:     30fps (match screen recording)
-  Audio:          On (built-in mic is fine for sync reference)
+  Audio:          ON (built-in mic for sync reference only)
 
 File naming:
   Set date/time correctly for file ordering
 ```
 
+**Important:** Keep camera audio ON even though you'll mute it later. It's needed for waveform sync.
+
 ### Screen (QuickTime Player)
 
 ```
 File > New Screen Recording
-  Microphone:     Built-in or external mic
+
+Click dropdown arrow next to record button:
+  Microphone:     Hollyland Lark M2
 
 Options:
   Show Mouse Clicks:    On (optional)
@@ -44,12 +68,18 @@ Options:
 Save to:    01-raw/screen/
 ```
 
-Or use **OBS** for more control:
+### Screen (OBS - Recommended)
+
+More control over audio levels and format:
 
 ```
 Scene: Screen Only
   - macOS Screen Capture
-  - Audio Input (mic)
+  - Audio Input: Hollyland Lark M2
+
+Settings > Audio:
+  Mic/Auxiliary Audio:  Hollyland Lark M2
+  Sample Rate:          48 kHz
 
 Recording:
   Format:     MOV
@@ -59,12 +89,20 @@ Recording:
 
 ### Audio Sync Reference
 
-**Critical:** Both recordings must capture the same audio for waveform sync.
+**How waveform sync works with Lark M2 setup:**
 
-Options:
-1. **Room audio** - Speak during recording, both mics pick it up
-2. **Clap at start** - Sharp audio spike for easy alignment
-3. **Music playback** - Play music briefly at start
+```
+Your voice → Lark M2 → Screen recording (loud, clear)
+          ↘
+           → Camera built-in mic (quieter, room ambience)
+
+Both recordings have your voice → DaVinci matches waveforms
+```
+
+**Tips for reliable sync:**
+1. Speak clearly at the start (helps sync algorithm)
+2. Clap once at the beginning (sharp spike = easy visual alignment)
+3. Keep camera audio gain reasonable (not too quiet)
 
 ---
 

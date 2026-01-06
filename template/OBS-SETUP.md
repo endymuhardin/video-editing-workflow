@@ -34,16 +34,40 @@ Settings:
 ```
 
 ### 3. Audio Sources
+
+#### Hollyland Lark M2 Setup
+
+```
+1. Connect Lark M2 receiver via USB-C to MacBook
+
+2. System Preferences > Sound > Input
+   Select: "Hollyland Lark M2"
+
+3. Lark M2 Receiver Settings:
+   Gain:           Medium (adjust to avoid clipping)
+   Noise Reduction: On (if needed)
+   Low-Cut Filter:  On (reduces rumble)
+```
+
+#### OBS Audio Configuration
+
 ```
 Source Type: Audio Input Capture
-Name: Mic-Main
+Name: Mic-LarkM2
 Settings:
-  - Device: [Your microphone]
+  Device: Hollyland Lark M2
 
 Source Type: Audio Output Capture
 Name: System-Audio
 Settings:
-  - Device: [For capturing system sounds if needed]
+  Device: [For capturing system sounds if needed]
+```
+
+#### Audio Levels
+```
+Target peak level:     -12dB to -6dB
+OBS Audio Mixer:       Watch for yellow, avoid red
+Lark M2 receiver gain: Adjust if clipping
 ```
 
 ## Scene Configuration
