@@ -27,15 +27,17 @@ template/
 ├── 07-archive/          # Completed project archives
 ├── auto-edit.sh         # Auto-editor script
 ├── DAVINCI-SETTINGS.md  # DaVinci Resolve 20.x project settings
-├── OBS-SETUP.md         # OBS multi-source recording guide
+├── OBS-SETUP.md         # Screen recording setup (M1)
+├── SYNC-WORKFLOW.md     # Camera + screen sync guide
 └── README.md            # This file
 ```
 
 ## Documentation
 
 - **README.md** - Workflow overview and checklist
-- **OBS-SETUP.md** - Multi-source recording setup (screen + camera)
+- **OBS-SETUP.md** - Screen recording setup (M1 optimized)
 - **DAVINCI-SETTINGS.md** - Project settings, export presets, AI features (Resolve 20.x)
+- **SYNC-WORKFLOW.md** - Syncing separate camera + screen recordings
 
 ## Naming Convention
 
