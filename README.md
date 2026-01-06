@@ -24,7 +24,16 @@ Streamlined video production workflow for programming tutorial videos. Optimized
 ```bash
 git clone https://github.com/endymuhardin/video-editing-workflow.git
 cd video-editing-workflow
+
+# Setup Python virtual environment
+python3 -m venv venv
+source venv/bin/activate
 pip install auto-editor
+```
+
+To activate venv in future sessions:
+```bash
+source venv/bin/activate
 ```
 
 ## Quick Start

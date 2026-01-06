@@ -77,6 +77,11 @@ Optimized Media/
 .vscode/
 *.sublime-*
 
+# Python virtual environment
+venv/
+__pycache__/
+*.pyc
+
 # Projects folder (each project managed separately)
 projects/*
 !projects/.gitkeep

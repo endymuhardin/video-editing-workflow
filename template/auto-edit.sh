@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # Auto-editor script for removing silences and filler
-# Requires: pip install auto-editor
 # Usage: ./auto-edit.sh [OPTIONS]
 #
 # Options:
@@ -15,6 +14,26 @@ set -e
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 RAW_DIR="$SCRIPT_DIR/01-raw"
 OUTPUT_DIR="$SCRIPT_DIR/03-project/auto-editor"
+
+# Find and activate venv
+VENV_PATHS=(
+    "$SCRIPT_DIR/../../venv/bin/activate"      # From project folder
+    "$SCRIPT_DIR/../venv/bin/activate"         # From template folder
+    "$SCRIPT_DIR/venv/bin/activate"            # Local venv
+)
+
+VENV_FOUND=false
+for VENV_PATH in "${VENV_PATHS[@]}"; do
+    if [ -f "$VENV_PATH" ]; then
+        source "$VENV_PATH"
+        VENV_FOUND=true
+        break
+    fi
+done
+
+if [ "$VENV_FOUND" = false ]; then
+    echo "Warning: venv not found, using system Python"
+fi
 
 # Default settings
 MARGIN="0.1sec"

@@ -51,9 +51,9 @@ Examples:
 
 ## Auto-Editor Usage
 
-Install (one-time):
+Activate venv first (from project root):
 ```bash
-pip install auto-editor
+source ../../venv/bin/activate
 ```
 
 Basic usage (removes silences, exports DaVinci XML):
