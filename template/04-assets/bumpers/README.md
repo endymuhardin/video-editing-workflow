@@ -1,6 +1,6 @@
-# Intro Bumper Fusion Templates
+# Bumper Fusion Templates
 
-## Available Templates
+## Intro Templates
 
 ### 1. IntroBumper_Modern.setting
 
@@ -147,6 +147,107 @@ ArtiVisi blue accent: RGB(0.2, 0.6, 0.9)
 1. Import logo as MediaIn
 2. Merge above text
 3. Animate with Transform node
+
+---
+
+## Outro Templates
+
+### 1. OutroBumper_EndScreen.setting
+
+Full outro with YouTube end screen placeholders (20 seconds).
+
+```
+┌─────────────────────────────────────────┐
+│     Subscribe for more tutorials        │
+│   youtube.com/artivisi • github.com/... │
+│                                         │
+│   ┌─────────────┐   ┌─────────────┐     │
+│   │             │   │             │     │
+│   │  Video 1    │   │  Video 2    │     │
+│   │  (YouTube   │   │  (YouTube   │     │
+│   │  End Card)  │   │  End Card)  │     │
+│   │             │   │             │     │
+│   └─────────────┘   └─────────────┘     │
+│                                         │
+│         Thanks for watching!            │
+│            ════════════                 │
+│              ArtiVisi                   │
+└─────────────────────────────────────────┘
+```
+
+**Duration:** 20 seconds (600 frames @ 30fps)
+
+**YouTube End Screen compatible:**
+- Two placeholder areas for video/playlist cards
+- Safe zones positioned for YouTube's end screen editor
+- Add end screen elements in YouTube Studio after upload
+
+**Editable Controls:**
+- Thank You Text
+- Channel Name
+- CTA Text (Subscribe message)
+- Social Links
+- Background Color
+- Accent Color
+
+**Animation sequence:**
+- Frame 0-25: Thank you text fades in
+- Frame 15-40: Channel name fades in
+- Frame 25-55: Accent bar animates
+- Frame 45-70: Subscribe text fades in
+- Frame 60-85: Social links fade in
+- Frame 545-600: All elements fade out
+
+### 2. OutroBumper_Simple.setting
+
+Short outro with subscribe button animation (5 seconds).
+
+```
+┌─────────────────────────────────────────┐
+│                                         │
+│                                         │
+│          Thanks for watching            │
+│              ArtiVisi                   │
+│                                         │
+│         ┌──────────────────┐            │
+│         │  Like & Subscribe │           │
+│         └──────────────────┘            │
+│                                         │
+│                                         │
+└─────────────────────────────────────────┘
+```
+
+**Duration:** 5 seconds (150 frames @ 30fps)
+
+**Editable Controls:**
+- Message (Thanks text)
+- Channel Name
+- Call to Action (button text)
+- Background Color
+- Button Color (YouTube red default)
+
+**Animation sequence:**
+- Frame 0-20: Thanks text fades in + slides
+- Frame 10-30: Channel name fades in + slides
+- Frame 25-65: Subscribe button scales in with bounce
+- Frame 35-60: CTA text fades in
+- Frame 115-150: All elements fade out
+
+---
+
+## Outro Usage Tips
+
+### YouTube End Screen Setup
+1. Export video with OutroBumper_EndScreen
+2. Upload to YouTube
+3. YouTube Studio > Video details > End screen
+4. Add elements in the placeholder areas
+5. Position matches template safe zones
+
+### Recommended End Screen Elements
+- Subscribe button (centered)
+- Latest video (left placeholder)
+- Best for viewer / playlist (right placeholder)
 
 ---
 
