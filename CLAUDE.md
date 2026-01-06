@@ -10,8 +10,16 @@ Video editing workflow system for programming tutorial videos on MacBook Pro M1.
 
 ### Project Creation
 ```bash
-./new-project.sh PROJECT_CODE "Project Description"
-# Creates: projects/YYYY-MM-DD_PROJECT_CODE/ with full template structure
+./new-project.sh PROJECT_CODE [CONTENT_TYPE] "Description"
+
+# Interactive mode (prompts for content type):
+./new-project.sh SPRING01
+
+# Direct mode:
+./new-project.sh SPRING01 coding-tutorial "Spring Boot Tutorial"
+./new-project.sh BALI01 vlog "Bali Trip Day 1"
+./new-project.sh EP42 podcast "Interview with Dr. Smith"
+./new-project.sh TIP01 shorts "Quick Git Tip"
 ```
 
 ### Auto-Editor (Silence Removal)
