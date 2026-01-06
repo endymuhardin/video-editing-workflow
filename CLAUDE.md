@@ -37,6 +37,7 @@ pip install auto-editor
 ### Directory Structure
 ```
 template/
+├── 00-planning/     # Pre-production (script/, outline/, shotlist/, demo-code/)
 ├── 01-raw/          # Immutable source (camera/, screen/, audio/)
 ├── 02-proxy/        # Temp cache/proxies (gitignored)
 ├── 03-project/      # DaVinci .drp + auto-editor output
@@ -46,11 +47,18 @@ template/
 └── 07-archive/      # Completed archives (gitignored)
 ```
 
+### Footage Types (for shotlist planning)
+- **TH** = Talking Head (camera only, OBS F1)
+- **SC** = Screen Capture (OBS F3)
+- **TH+SC** = Picture-in-picture (OBS F2)
+- **BR** = B-Roll (cutaways, close-ups)
+- **GFX** = Graphics/Infographic
+
 ### Processing Pipeline
 ```
-OBS Recording → auto-editor (silence removal) → DaVinci Resolve → Export
-                      ↓
-               03-project/auto-editor/*.xml
+Planning → OBS Recording → auto-editor (silence removal) → DaVinci Resolve → Export
+              ↓                     ↓
+         00-planning/        03-project/auto-editor/*.xml
 ```
 
 ### Hardware Setup
