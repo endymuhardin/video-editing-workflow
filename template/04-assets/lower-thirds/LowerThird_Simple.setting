@@ -1,0 +1,264 @@
+{
+	Tools = ordered() {
+		LowerThird = GroupOperator {
+			CtrlWZoom = false,
+			NameSet = true,
+			CustomData = {
+				HelpPage = "https://github.com/artivisi",
+			},
+			Inputs = ordered() {
+				MainInput1 = InstanceInput {
+					SourceOp = "Background1",
+					Source = "TopLeftAlpha",
+				},
+				Input1 = InstanceInput {
+					SourceOp = "NameText",
+					Source = "StyledText",
+					Name = "Name",
+					ControlGroup = 1,
+					Default = "Endy Muhardin",
+				},
+				Input2 = InstanceInput {
+					SourceOp = "TitleText",
+					Source = "StyledText",
+					Name = "Title",
+					ControlGroup = 2,
+					Default = "Software Architect",
+				},
+				Input3 = InstanceInput {
+					SourceOp = "Background1",
+					Source = "TopLeftRed",
+					Name = "Bar Color",
+					ControlGroup = 3,
+					Default = 0.2,
+				},
+				Input4 = InstanceInput {
+					SourceOp = "Background1",
+					Source = "TopLeftGreen",
+					ControlGroup = 3,
+					Default = 0.6,
+				},
+				Input5 = InstanceInput {
+					SourceOp = "Background1",
+					Source = "TopLeftBlue",
+					ControlGroup = 3,
+					Default = 0.9,
+				},
+				Input6 = InstanceInput {
+					SourceOp = "AnimateIn",
+					Source = "Offset",
+					Name = "Animation Offset",
+					ControlGroup = 4,
+					Default = 0,
+				},
+			},
+			Outputs = {
+				MainOutput1 = InstanceOutput {
+					SourceOp = "Merge3",
+					Source = "Output",
+				}
+			},
+			ViewInfo = GroupInfo {
+				Pos = { 660, 280 },
+				Flags = {
+					AllowPan = false,
+					GridSnap = true,
+					AutoSnap = true,
+				},
+				Size = { 400, 300 },
+				Direction = "Horizontal",
+				PipeStyle = "Direct",
+				Scale = 1,
+				Offset = { 0, 0 },
+			},
+			Tools = ordered() {
+				Background1 = Background {
+					CtrlWShown = false,
+					Inputs = {
+						GlobalOut = Input { Value = 150, },
+						Width = Input { Value = 1920, },
+						Height = Input { Value = 1080, },
+						UseFrameFormatSettings = Input { Value = 1, },
+						["Gamut.SLogVersion"] = Input { Value = FuID { "SLog2" }, },
+						TopLeftRed = Input { Value = 0.2, },
+						TopLeftGreen = Input { Value = 0.6, },
+						TopLeftBlue = Input { Value = 0.9, },
+						TopLeftAlpha = Input { Value = 0.85, },
+					},
+					ViewInfo = OperatorInfo { Pos = { 55, 115 } },
+				},
+				Rectangle1 = RectangleMask {
+					CtrlWShown = false,
+					Inputs = {
+						MaskWidth = Input { Value = 1920, },
+						MaskHeight = Input { Value = 1080, },
+						PixelAspect = Input { Value = { 1, 1 }, },
+						ClippingMode = Input { Value = FuID { "None" }, },
+						Center = Input { Value = { 0.25, 0.12 }, },
+						Width = Input { Value = 0.45, },
+						Height = Input { Value = 0.08, },
+						CornerRadius = Input { Value = 0.005, },
+					},
+					ViewInfo = OperatorInfo { Pos = { 55, 50 } },
+				},
+				Bitmap1 = BitmapMask {
+					CtrlWShown = false,
+					Inputs = {
+						MaskWidth = Input { Value = 1920, },
+						MaskHeight = Input { Value = 1080, },
+						PixelAspect = Input { Value = { 1, 1 }, },
+						ClippingMode = Input { Value = FuID { "None" }, },
+						Image = Input {
+							SourceOp = "Background1",
+							Source = "Output",
+						},
+						Channel = Input { Value = FuID { "Luminance" }, },
+						High = Input { Value = 0.5, },
+						EffectMask = Input {
+							SourceOp = "Rectangle1",
+							Source = "Mask",
+						}
+					},
+					ViewInfo = OperatorInfo { Pos = { 165, 82 } },
+				},
+				NameText = TextPlus {
+					CtrlWShown = false,
+					Inputs = {
+						GlobalOut = Input { Value = 150, },
+						Width = Input { Value = 1920, },
+						Height = Input { Value = 1080, },
+						UseFrameFormatSettings = Input { Value = 1, },
+						["Gamut.SLogVersion"] = Input { Value = FuID { "SLog2" }, },
+						Center = Input { Value = { 0.08, 0.135 }, },
+						LayoutRotation = Input { Value = 1, },
+						TransformRotation = Input { Value = 1, },
+						Softness1 = Input { Value = 1, },
+						StyledText = Input { Value = "Endy Muhardin", },
+						Font = Input { Value = "SF Pro Display", },
+						Style = Input { Value = "Bold", },
+						Size = Input { Value = 0.045, },
+						VerticalJustificationNew = Input { Value = 3, },
+						HorizontalLeftCenterRight = Input { Value = -1, },
+						HorizontalJustificationNew = Input { Value = 3, },
+					},
+					ViewInfo = OperatorInfo { Pos = { 55, 180 } },
+				},
+				TitleText = TextPlus {
+					CtrlWShown = false,
+					Inputs = {
+						GlobalOut = Input { Value = 150, },
+						Width = Input { Value = 1920, },
+						Height = Input { Value = 1080, },
+						UseFrameFormatSettings = Input { Value = 1, },
+						["Gamut.SLogVersion"] = Input { Value = FuID { "SLog2" }, },
+						Center = Input { Value = { 0.08, 0.1 }, },
+						LayoutRotation = Input { Value = 1, },
+						TransformRotation = Input { Value = 1, },
+						Softness1 = Input { Value = 1, },
+						StyledText = Input { Value = "Software Architect", },
+						Font = Input { Value = "SF Pro Display", },
+						Style = Input { Value = "Regular", },
+						Size = Input { Value = 0.028, },
+						VerticalJustificationNew = Input { Value = 3, },
+						HorizontalLeftCenterRight = Input { Value = -1, },
+						HorizontalJustificationNew = Input { Value = 3, },
+						Red1 = Input { Value = 0.85, },
+						Green1 = Input { Value = 0.85, },
+						Blue1 = Input { Value = 0.85, },
+					},
+					ViewInfo = OperatorInfo { Pos = { 165, 180 } },
+				},
+				Merge1 = Merge {
+					CtrlWShown = false,
+					Inputs = {
+						Background = Input {
+							SourceOp = "Background1",
+							Source = "Output",
+						},
+						Foreground = Input {
+							SourceOp = "NameText",
+							Source = "Output",
+						},
+						PerformDepthMerge = Input { Value = 0, },
+						EffectMask = Input {
+							SourceOp = "Bitmap1",
+							Source = "Mask",
+						}
+					},
+					ViewInfo = OperatorInfo { Pos = { 165, 115 } },
+				},
+				Merge2 = Merge {
+					CtrlWShown = false,
+					Inputs = {
+						Background = Input {
+							SourceOp = "Merge1",
+							Source = "Output",
+						},
+						Foreground = Input {
+							SourceOp = "TitleText",
+							Source = "Output",
+						},
+						PerformDepthMerge = Input { Value = 0, },
+						EffectMask = Input {
+							SourceOp = "Bitmap1",
+							Source = "Mask",
+						}
+					},
+					ViewInfo = OperatorInfo { Pos = { 275, 115 } },
+				},
+				AnimateIn = Transform {
+					CtrlWShown = false,
+					Inputs = {
+						Center = Input {
+							Value = { 0.5, 0.5 },
+							Expression = "Point(0.5 - (1-Offset)*0.5, 0.5)",
+						},
+						Offset = Input {
+							SourceOp = "AnimateInOffset",
+							Source = "Value",
+						},
+						Input = Input {
+							SourceOp = "Merge2",
+							Source = "Output",
+						},
+					},
+					ViewInfo = OperatorInfo { Pos = { 385, 115 } },
+				},
+				AnimateInOffset = BezierSpline {
+					SplineColor = { Red = 255, Green = 0, Blue = 255 },
+					CtrlWZoom = false,
+					KeyFrames = {
+						[0] = { 0, RH = { 8, 0.333333333333333 }, Flags = { Linear = true } },
+						[15] = { 1, LH = { 7, 0.666666666666667 }, Flags = { Linear = true } },
+						[135] = { 1, RH = { 143, 0.666666666666667 }, Flags = { Linear = true } },
+						[150] = { 0, LH = { 142, 0.333333333333333 }, Flags = { Linear = true } },
+					},
+				},
+				Merge3 = Merge {
+					CtrlWShown = false,
+					Inputs = {
+						Background = Input {
+							SourceOp = "MediaIn1",
+							Source = "Output",
+						},
+						Foreground = Input {
+							SourceOp = "AnimateIn",
+							Source = "Output",
+						},
+						PerformDepthMerge = Input { Value = 0, },
+					},
+					ViewInfo = OperatorInfo { Pos = { 495, 115 } },
+				},
+				MediaIn1 = MediaIn {
+					CtrlWShown = false,
+					Inputs = {
+						GlobalOut = Input { Value = 150, },
+						["Gamut.SLogVersion"] = Input { Value = FuID { "SLog2" }, },
+					},
+					ViewInfo = OperatorInfo { Pos = { 495, 50 } },
+				},
+			},
+		},
+	},
+	ActiveTool = "LowerThird",
+}

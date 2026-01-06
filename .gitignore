@@ -1,0 +1,82 @@
+# Video files
+*.mov
+*.mp4
+*.mkv
+*.avi
+*.m4v
+*.webm
+*.wmv
+*.flv
+
+# Audio files
+*.wav
+*.mp3
+*.aac
+*.m4a
+*.flac
+
+# Image files (except templates)
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.tiff
+*.bmp
+*.psd
+
+# DaVinci Resolve
+*.drp
+*.dra
+*.dpx
+*.braw
+*.r3d
+CacheClip/
+CacheClip*/
+.Thumbnails/
+.gallery/
+Optimized Media/
+
+# Proxy and cache
+02-proxy/*
+!02-proxy/.gitkeep
+
+# Raw footage
+01-raw/**/*
+!01-raw/**/
+!01-raw/**/.gitkeep
+
+# Exports
+05-exports/**/*
+!05-exports/**/
+!05-exports/**/.gitkeep
+
+# Archive
+07-archive/*
+!07-archive/.gitkeep
+
+# Auto-editor output
+03-project/auto-editor/*
+!03-project/auto-editor/.gitkeep
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*~
+
+# IDE
+.idea/
+.vscode/
+*.sublime-*
+
+# Projects folder (each project managed separately)
+projects/*
+!projects/.gitkeep
